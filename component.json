@@ -1,0 +1,15 @@
+{
+  "name": "pixi.js",
+  "repo": "CharlotteGore/pixi.js",
+  "description": "Super fast HTML 5 2D rendering engine that uses webGL with canvas fallback",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "Mat Groves",
+  "homepage": "http://goodboydigital.com/",
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "bin/pixi.dev.js"
+  ]
+}
