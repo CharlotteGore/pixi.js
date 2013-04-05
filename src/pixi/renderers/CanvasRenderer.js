@@ -162,9 +162,9 @@ PIXI.CanvasRenderer.prototype.renderDisplayObject = function(displayObject)
 								   displayObject.width,
 								   displayObject.height);
 			//}
-		}					   
-   	}
-   	else if(displayObject instanceof PIXI.Strip)
+		}
+	}
+	else if(displayObject instanceof PIXI.Strip)
 	{
 		context.setTransform(transform[0], transform[3], transform[1], transform[4], transform[2], transform[5])
 		this.renderStrip(displayObject);
@@ -196,14 +196,14 @@ PIXI.CanvasRenderer.prototype.renderStripFlat = function(strip)
 		// draw some triangles!
 		var index = i*2;
 		
-		 var x0 = verticies[index],   x1 = verticies[index+2], x2 = verticies[index+4];
- 		 var y0 = verticies[index+1], y1 = verticies[index+3], y2 = verticies[index+5];
- 		 
+		var x0 = verticies[index],   x1 = verticies[index+2], x2 = verticies[index+4];
+		var y0 = verticies[index+1], y1 = verticies[index+3], y2 = verticies[index+5];
+
 		context.moveTo(x0, y0);
 		context.lineTo(x1, y1);
 		context.lineTo(x2, y2);
 		
-	};	
+	}
 	
 //	context.globalCompositeOperation = 'lighter';
 	context.fillStyle = "#FF0000";
@@ -231,11 +231,11 @@ PIXI.CanvasRenderer.prototype.renderStrip = function(strip)
 		// draw some triangles!
 		var index = i*2;
 		
-		 var x0 = verticies[index],   x1 = verticies[index+2], x2 = verticies[index+4];
- 		 var y0 = verticies[index+1], y1 = verticies[index+3], y2 = verticies[index+5];
- 		 
-  		 var u0 = uvs[index] * strip.texture.width,   u1 = uvs[index+2]* strip.texture.width, u2 = uvs[index+4]* strip.texture.width;
-   		 var v0 = uvs[index+1]* strip.texture.height, v1 = uvs[index+3]* strip.texture.height, v2 = uvs[index+5]* strip.texture.height;
+		var x0 = verticies[index],   x1 = verticies[index+2], x2 = verticies[index+4];
+		var y0 = verticies[index+1], y1 = verticies[index+3], y2 = verticies[index+5];
+
+		var u0 = uvs[index] * strip.texture.width,   u1 = uvs[index+2]* strip.texture.width, u2 = uvs[index+4]* strip.texture.width;
+		var v0 = uvs[index+1]* strip.texture.height, v1 = uvs[index+3]* strip.texture.height, v2 = uvs[index+5]* strip.texture.height;
 
 
 		context.save();
@@ -267,8 +267,8 @@ PIXI.CanvasRenderer.prototype.renderStrip = function(strip)
                       delta_c/delta, delta_f/delta);
                  
 		context.drawImage(strip.texture.baseTexture.source, 0, 0);
-	  	context.restore();
-	};
+		context.restore();
+	}
 	
 //	context.globalCompositeOperation = 'source-over';	
 }

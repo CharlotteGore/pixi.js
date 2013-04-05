@@ -33,14 +33,14 @@ PIXI.WebGLRenderer = function(width, height, view)
 	this.batchs = [];
 	
 	try 
- 	{
-        this.gl = this.view.getContext("experimental-webgl",  {  	
-    		 alpha: false
+	{
+        this.gl = this.view.getContext("experimental-webgl", {
+			alpha: false
         });
     } 
     catch (e) 
     {
-    	throw new Error(" This browser does not support webGL. Try using the canvas renderer" + this);
+		throw new Error(" This browser does not support webGL. Try using the canvas renderer" + this);
     }
     
     this.initShaders();
@@ -49,9 +49,9 @@ PIXI.WebGLRenderer = function(width, height, view)
     var gl = this.gl;
     
     this.batch = new PIXI.WebGLBatch(gl);
-   	gl.disable(gl.DEPTH_TEST);
-    gl.enable(gl.BLEND);
-    gl.colorMask(true, true, true, false); 
+	gl.disable(gl.DEPTH_TEST);
+	gl.enable(gl.BLEND);
+	gl.colorMask(true, true, true, false); 
     
     this.projectionMatrix =  PIXI.mat4.create();
     this.resize(this.width, this.height)
@@ -146,7 +146,7 @@ PIXI.WebGLRenderer.prototype.checkVisibility = function(displayObject, globalVis
 		{
 			this.checkVisibility(child, actualVisibility);
 		}
-	};
+	}
 }
 
 
@@ -168,7 +168,7 @@ PIXI.WebGLRenderer.prototype.render = function(stage)
 
 
 	// update any textures	
-	for (var i=0; i < PIXI.texturesToUpdate.length; i++) this.updateTexture(PIXI.texturesToUpdate[i]);
+	for (i=0; i < PIXI.texturesToUpdate.length; i++) this.updateTexture(PIXI.texturesToUpdate[i]);
 	
 	// empty out the arrays
 	stage.__childrenRemoved = [];
@@ -188,14 +188,14 @@ PIXI.WebGLRenderer.prototype.render = function(stage)
 	gl.clearColor(stage.backgroundColorSplit[0], stage.backgroundColorSplit[1], stage.backgroundColorSplit[2], 1.0);     
 	
 	// set the correct blend mode!
- 	gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-    gl.uniformMatrix4fv(this.shaderProgram.mvMatrixUniform, false, this.projectionMatrix);
+	gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+	gl.uniformMatrix4fv(this.shaderProgram.mvMatrixUniform, false, this.projectionMatrix);
    
 	// render all the batchs!	
 	
 	
 	var renderable;
-	for (var i=0; i < this.batchs.length; i++) 
+	for (i=0; i < this.batchs.length; i++) 
 	{
 		renderable = this.batchs[i];
 		if(renderable instanceof PIXI.WebGLBatch)
@@ -236,7 +236,7 @@ PIXI.WebGLRenderer.prototype.updateTexture = function(texture)
 	if(texture.hasLoaded)
 	{
 		gl.bindTexture(gl.TEXTURE_2D, texture._glTexture);
-	 	gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+		gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.source);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -255,6 +255,8 @@ PIXI.WebGLRenderer.prototype.updateTexture = function(texture)
  */
 PIXI.WebGLRenderer.prototype.addDisplayObject = function(displayObject)
 {
+
+	var batch, index;
 	
 	if(!displayObject.stage)return; // means it was removed 
 	if(displayObject.__inWebGL)return; //means it is already in webgL
@@ -281,7 +283,7 @@ PIXI.WebGLRenderer.prototype.addDisplayObject = function(displayObject)
 	var previousSprite = displayObject;
 	do
 	{
-		if(previousSprite.childIndex == 0)
+		if(previousSprite.childIndex === 0)
 		{
 			previousSprite = previousSprite.parent;
 			
@@ -290,7 +292,7 @@ PIXI.WebGLRenderer.prototype.addDisplayObject = function(displayObject)
 		{
 			previousSprite = previousSprite.parent.children[previousSprite.childIndex-1];
 			// what if the bloop has children???
-			while(previousSprite.children.length != 0)
+			while(previousSprite.children.length !== 0)
 			{
 				// keep diggin till we get to the last child
 				previousSprite = previousSprite.children[previousSprite.children.length-1];
@@ -315,10 +317,10 @@ PIXI.WebGLRenderer.prototype.addDisplayObject = function(displayObject)
 	{
 		// moving forward!
 		// if it has no children.. 
-		if(nextSprite.children.length == 0)
+		if(nextSprite.children.length === 0)
 		{
 			// go along to the parent..
-			while(nextSprite.childIndex == nextSprite.parent.children.length-1)
+			while(nextSprite.childIndex === nextSprite.parent.children.length-1)
 			{
 				nextSprite = nextSprite.parent;
 				if(nextSprite == displayObject.stage)
@@ -396,9 +398,9 @@ PIXI.WebGLRenderer.prototype.addDisplayObject = function(displayObject)
 							 * seems the new sprite is in the middle of a batch
 							 * lets split it.. 
 							 */
-							var batch = PIXI._getBatch(this.gl);
+							batch = PIXI._getBatch(this.gl);
 
-							var index = this.batchs.indexOf( previousBatch );
+							index = this.batchs.indexOf( previousBatch );
 							batch.init(displayObject);
 							this.batchs.splice(index+1, 0, batch, splitBatch);
 							
@@ -420,12 +422,12 @@ PIXI.WebGLRenderer.prototype.addDisplayObject = function(displayObject)
 		 * time to create anew one!
 		 */
 		
-		var batch = PIXI._getBatch(this.gl);
+		batch = PIXI._getBatch(this.gl);
 		batch.init(displayObject);
 
 		if(previousBatch) // if this is invalid it means 
 		{
-			var index = this.batchs.indexOf( previousBatch );
+			index = this.batchs.indexOf( previousBatch );
 			this.batchs.splice(index+1, 0, batch);
 		}
 		else
@@ -473,7 +475,7 @@ PIXI.WebGLRenderer.prototype.removeDisplayObject = function(displayObject)
 		batch.remove(displayObject);
 		
 		
-		if(batch.size==0)
+		if(batch.size===0)
 		{
 			batchToRemove = batch
 		}
@@ -493,7 +495,7 @@ PIXI.WebGLRenderer.prototype.removeDisplayObject = function(displayObject)
 		
 		// ok so.. check to see if you adjacent batchs should be joined.
 		// TODO may optimise?
-		if(index == 0 || index == this.batchs.length-1)
+		if(index === 0 || index === this.batchs.length-1)
 		{
 			// wha - eva! just get of the empty batch!
 			this.batchs.splice(index, 1);
@@ -607,8 +609,8 @@ PIXI.WebGLRenderer.prototype.renderStrip = function(strip)
 	    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 2, gl.FLOAT, false, 0, 0);
 		
 		// update the uvs
-	   	gl.bindBuffer(gl.ARRAY_BUFFER, strip._uvBuffer);
-	    gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
+		gl.bindBuffer(gl.ARRAY_BUFFER, strip._uvBuffer);
+		gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
 			
 	    gl.activeTexture(gl.TEXTURE0);
 	    gl.bindTexture(gl.TEXTURE_2D, strip.texture.baseTexture._glTexture);
@@ -629,9 +631,9 @@ PIXI.WebGLRenderer.prototype.renderStrip = function(strip)
 	    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 2, gl.FLOAT, false, 0, 0);
 		
 		// update the uvs
-	   	gl.bindBuffer(gl.ARRAY_BUFFER, strip._uvBuffer);
-	   	gl.bufferData(gl.ARRAY_BUFFER, strip.uvs, gl.STATIC_DRAW)
-	    gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
+		gl.bindBuffer(gl.ARRAY_BUFFER, strip._uvBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, strip.uvs, gl.STATIC_DRAW)
+		gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
 			
 	    gl.activeTexture(gl.TEXTURE0);
 	    gl.bindTexture(gl.TEXTURE_2D, strip.texture.baseTexture._glTexture);
@@ -667,7 +669,7 @@ PIXI.WebGLRenderer.prototype.handleContextLost = function(event)
  */
 PIXI.WebGLRenderer.prototype.handleContextRestored = function(event)
 {
-	this.gl = this.view.getContext("experimental-webgl",  {  	
+	this.gl = this.view.getContext("experimental-webgl", {
 		alpha: true
     });
         
@@ -676,13 +678,13 @@ PIXI.WebGLRenderer.prototype.handleContextRestored = function(event)
 	for (var i=0; i < PIXI.TextureCache.length; i++) 
 	{
 		this.updateTexture(PIXI.TextureCache[i]);
-	};
+	}
 	
-	for (var i=0; i <  this.batchs.length; i++) 
+	for (i=0; i <  this.batchs.length; i++) 
 	{
 		this.batchs[i].restoreLostContext(this.gl)//
 		this.batchs[i].dirty = true;
-	};
+	}
 	
 	PIXI._restoreBatchs(this.gl);
 	

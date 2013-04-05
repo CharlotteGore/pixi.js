@@ -77,10 +77,9 @@ PIXI.Stage.prototype.__addChild = function(child)
 	{
 		for (var i=0; i < child.children.length; i++) 
 		{
-		  	this.__addChild(child.children[i]);
-		};
+			this.__addChild(child.children[i]);
+		}
 	}
-	
 }
 
 
@@ -96,7 +95,7 @@ PIXI.Stage.prototype.__removeChild = function(child)
 	{
 		for(var i=0,j=child.children.length; i<j; i++)
 		{
-		  	this.__removeChild(child.children[i])
+			this.__removeChild(child.children[i])
 		}
 	}
 }

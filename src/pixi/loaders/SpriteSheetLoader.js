@@ -1,3 +1,4 @@
+/* jshint evil:true */
 /**
  * @author Mat Groves http://matgroves.com/ @Doormat23
  */
@@ -26,7 +27,7 @@ PIXI.SpriteSheetLoader = function(url)
 	PIXI.EventTarget.call( this );
 	this.url = url;
 	this.baseUrl = url.replace(/[^\/]*$/, '');
-	this.texture;
+	this.texture = null;
 	this.frames = {};
 	this.crossorigin = false;
 }
@@ -55,8 +56,8 @@ PIXI.SpriteSheetLoader.prototype.onLoaded = function()
 {
 	if (this.ajaxRequest.readyState==4)
 	{
-		 if (this.ajaxRequest.status==200 || window.location.href.indexOf("http")==-1)
-	 	{
+		if (this.ajaxRequest.status==200 || window.location.href.indexOf("http")==-1)
+		{
 			var jsondata = eval("("+this.ajaxRequest.responseText+")");
 			
 			var textureUrl = this.baseUrl + jsondata.meta.image;
@@ -79,7 +80,7 @@ PIXI.SpriteSheetLoader.prototype.onLoaded = function()
 					// calculate the offset!
 				}
 //				this.frames[i] = ;
-   			}
+			}
 			
 			if(this.texture.hasLoaded)
 			{
@@ -95,7 +96,7 @@ PIXI.SpriteSheetLoader.prototype.onLoaded = function()
 					
 				});
 			}
-	 	}
+		}
 	}
 	
 }

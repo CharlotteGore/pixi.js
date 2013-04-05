@@ -33,7 +33,7 @@ PIXI.DisplayObjectContainer.prototype = Object.create( PIXI.DisplayObject.protot
  */
 PIXI.DisplayObjectContainer.prototype.addChild = function(child)
 {
-	if(child.parent != undefined)
+	if(child.parent && child.parent.removeChild)
 	{
 		child.parent.removeChild(child)
 	}
@@ -58,14 +58,14 @@ PIXI.DisplayObjectContainer.prototype.addChildAt = function(child, index)
 {
 	if(index >= 0 && index <= this.children.length)
 	{
-		if(child.parent != undefined)
+		if(child.parent && child.parent.removeChild)
 		{
 			child.parent.removeChild(child);
 		}
 	
 		if (index == this.children.length)
 		{
-		  	this.children.push(child);
+			this.children.push(child);
 		}	
 		else 
 		{
@@ -78,7 +78,7 @@ PIXI.DisplayObjectContainer.prototype.addChildAt = function(child, index)
 		var length = this.children.length;
 		for (var i=index; i < length; i++) 
 		{
-		  this.children[i].childIndex = i;
+			this.children[i].childIndex = i;
 		}
 		
 		if(this.stage)

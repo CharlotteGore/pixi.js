@@ -1,3 +1,4 @@
+/* jshint loopfunc: true */
 /**
  * @author Mat Groves http://matgroves.com/ @Doormat23
  */
@@ -47,17 +48,19 @@ PIXI.AssetLoader.prototype.load = function()
 {
 	this.loadCount = this.assetURLs.length;
 	var imageTypes = ["jpeg", "jpg", "png", "gif"];
+	var i, j;
+	var scope;
 	
 	var spriteSheetTypes = ["json"];
 	
-	for (var i=0; i < this.assetURLs.length; i++) 
+	for (i=0; i < this.assetURLs.length; i++) 
 	{
 		var filename = this.assetURLs[i];
 		var fileType = filename.split('.').pop().toLowerCase();
 		// what are we loading?
 		var type = null;
 		
-		for (var j=0; j < imageTypes.length; j++) 
+		for (j=0; j < imageTypes.length; j++) 
 		{
 			if(fileType == imageTypes[j])
 			{
@@ -66,9 +69,9 @@ PIXI.AssetLoader.prototype.load = function()
 			}
 		}
 		
-		if(type != "img")
+		if(type !== "img")
 		{
-			for (var j=0; j < spriteSheetTypes.length; j++) 
+			for (j=0; j < spriteSheetTypes.length; j++) 
 			{
 				if(fileType == spriteSheetTypes[j])
 				{
@@ -78,14 +81,14 @@ PIXI.AssetLoader.prototype.load = function()
 			}
 		}
 		
-		if(type == "img")
+		if(type === "img")
 		{
 			
 			var texture = PIXI.Texture.fromImage(filename, this.crossorigin);
 			if(!texture.baseTexture.hasLoaded)
 			{
 				
-				var scope = this;
+				scope = this;
 				texture.baseTexture.addEventListener( 'loaded', function ( event ) 
 				{
 					scope.onAssetLoaded();
@@ -99,7 +102,7 @@ PIXI.AssetLoader.prototype.load = function()
 				// already loaded!
 				this.loadCount--;
 				// if this hits zero here.. then everything was cached!
-				if(this.loadCount == 0)
+				if(this.loadCount === 0)
 				{
 					this.dispatchEvent( { type: 'onComplete', content: this } );
 					if(this.onComplete)this.onComplete();
@@ -112,8 +115,7 @@ PIXI.AssetLoader.prototype.load = function()
 			var spriteSheetLoader = new PIXI.SpriteSheetLoader(filename);
 			spriteSheetLoader.crossorigin = this.crossorigin;
 			this.assets.push(spriteSheetLoader);
-			
-			var scope = this;
+			scope = this;
 			spriteSheetLoader.addEventListener( 'loaded', function ( event ) 
 			{
 				scope.onAssetLoaded();
@@ -129,7 +131,7 @@ PIXI.AssetLoader.prototype.load = function()
 		}
 		
 		//this.assets[i].load();
-	};
+	}
 }
 
 PIXI.AssetLoader.prototype.onAssetLoaded = function()
@@ -138,7 +140,7 @@ PIXI.AssetLoader.prototype.onAssetLoaded = function()
 	this.dispatchEvent( { type: 'onProgress', content: this } );
 	if(this.onProgress)this.onProgress();
 	
-	if(this.loadCount == 0)
+	if(this.loadCount === 0)
 	{
 		this.dispatchEvent( { type: 'onComplete', content: this } );
 		if(this.onComplete)this.onComplete();

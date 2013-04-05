@@ -39,7 +39,7 @@ PIXI.MovieClip = function(textures)
 	 * @property playing
 	 * @type Boolean
 	 */
-	this.playing;
+	this.playing = false;
 }
 
 // constructor

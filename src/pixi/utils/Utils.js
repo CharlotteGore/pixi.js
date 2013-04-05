@@ -19,27 +19,25 @@ function HEXtoRGB(hex) {
 /**
  * Provides bind in a cross browser way.
  */
-if (typeof Function.prototype.bind != 'function') {
-  Function.prototype.bind = (function () {
-    var slice = Array.prototype.slice;
-    return function (thisArg) {
-      var target = this, boundArgs = slice.call(arguments, 1);
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function (oThis) {
+    if (typeof this !== "function") {
+      // closest thing possible to the ECMAScript 5 internal IsCallable function
+      throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+    }
  
-      if (typeof target != 'function') throw new TypeError();
+    var aArgs = Array.prototype.slice.call(arguments, 1), 
+        fToBind = this, 
+        fNOP = function () {},
+        fBound = function () {
+          return fToBind.apply(this instanceof fNOP && oThis ? this : oThis, aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
  
-      function bound() {
-	var args = boundArgs.concat(slice.call(arguments));
-	target.apply(this instanceof bound ? this : thisArg, args);
-      }
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
  
-      bound.prototype = (function F(proto) {
-          proto && (F.prototype = proto);
-          if (!(this instanceof F)) return new F;          
-	})(target.prototype);
- 
-      return bound;
-    };
-  })();
+    return fBound;
+  };
 }
 
 var AjaxRequest = function()
@@ -53,19 +51,19 @@ var AjaxRequest = function()
 			try{
 				return new ActiveXObject(activexmodes[i])
 			}
-   			catch(e){
-    			//suppress error
-   			}
+        catch(e){
+          //suppress error
+      }
 		}
 	}
 	else if (window.XMLHttpRequest) // if Mozilla, Safari etc
-  	{
-  		return new XMLHttpRequest()
- 	}
- 	else
- 	{
-		return false;
- 	}
+  {
+      return new XMLHttpRequest()
+  }
+  else
+  {
+    return false;
+  }
 }
 
 

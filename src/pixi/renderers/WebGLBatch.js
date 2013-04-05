@@ -9,7 +9,7 @@ PIXI._batchs = [];
  */
 PIXI._getBatch = function(gl)
 {
-	if(PIXI._batchs.length == 0)
+	if(PIXI._batchs.length === 0)
 	{
 		return new PIXI.WebGLBatch(gl);
 	}
@@ -36,7 +36,7 @@ PIXI._restoreBatchs = function(gl)
 	for (var i=0; i < PIXI._batchs.length; i++) 
 	{
 	  PIXI._batchs[i].restoreLostContext(gl);
-	};
+	}
 }
 
 /**
@@ -79,8 +79,8 @@ PIXI.WebGLBatch.prototype.clean = function()
 	this.last = null;
 	this.size = 0;
 	
-	this.head;
-	this.tail;
+	this.head = null;
+	this.tail = null;
 }
 
 /*
@@ -181,7 +181,7 @@ PIXI.WebGLBatch.prototype.remove = function(sprite)
 {
 	this.size--;
 	
-	if(this.size == 0)
+	if(this.size === 0)
 	{
 		sprite.batch = null;
 		sprite.__prev = null;
@@ -335,7 +335,7 @@ PIXI.WebGLBatch.prototype.growBatch = function()
 		this.indices[index2 + 3] = index3 + 0;
 		this.indices[index2 + 4] = index3 + 2;
 		this.indices[index2 + 5] = index3 + 3;
-	};
+	}
 	
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.indices, gl.STATIC_DRAW);
@@ -500,7 +500,7 @@ PIXI.WebGLBatch.prototype.render = function()
 		this.dirty = false;
 	}
 	
-	if (this.size == 0)return;
+	if (this.size === 0)return;
 	
 	this.update();
 	var gl = this.gl;
@@ -524,12 +524,12 @@ PIXI.WebGLBatch.prototype.render = function()
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 2, gl.FLOAT, false, 0, 0);
 	
 	// update the uvs
-   	gl.bindBuffer(gl.ARRAY_BUFFER, this.uvBuffer);
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.uvBuffer);
 
     if(this.dirtyUVS)
     {
-    	this.dirtyUVS = false;
-    	gl.bufferSubData(gl.ARRAY_BUFFER,  0, this.uvs);
+		this.dirtyUVS = false;
+		gl.bufferSubData(gl.ARRAY_BUFFER,  0, this.uvs);
     }
     
     gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
@@ -542,8 +542,8 @@ PIXI.WebGLBatch.prototype.render = function()
 
 	if(this.dirtyColors)
     {
-    	this.dirtyColors = false;
-    	gl.bufferSubData(gl.ARRAY_BUFFER, 0, this.colors);
+		this.dirtyColors = false;
+		gl.bufferSubData(gl.ARRAY_BUFFER, 0, this.colors);
 	}
 	
     gl.vertexAttribPointer(shaderProgram.colorAttribute, 1, gl.FLOAT, false, 0, 0);

@@ -20,7 +20,7 @@ PIXI.Texture = function(baseTexture, frame)
 	if(!frame)
 	{
 		this.noFrame = true;
-		frame = new PIXI.Rectangle(0,0,1,1);
+		var frame = new PIXI.Rectangle(0,0,1,1);
 	}
 	
 	this.trim = new PIXI.Point();

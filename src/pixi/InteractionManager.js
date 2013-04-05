@@ -107,9 +107,9 @@ PIXI.InteractionManager.prototype.setTarget = function(target)
 {
 	this.target = target;
 	if(this.mouseoverEnabled)target.view.addEventListener('mousemove',  this.onMouseMove.bind(this), true);
-	target.view.addEventListener('mousedown',  this.onMouseDown.bind(this), true);
- 	target.view.addEventListener('mouseup', 	this.onMouseUp.bind(this), true);
- 	target.view.addEventListener('mouseout', 	this.onMouseUp.bind(this), true);
+	target.view.addEventListener('mousedown', this.onMouseDown.bind(this), true);
+	target.view.addEventListener('mouseup', this.onMouseUp.bind(this), true);
+	target.view.addEventListener('mouseout', this.onMouseUp.bind(this), true);
 	
 	// aint no multi touch just yet!
 	target.view.addEventListener("touchstart", this.onTouchStart.bind(this), true);
@@ -352,7 +352,7 @@ PIXI.InteractionData = function()
 	 * @property target
 	 * @type Sprite
 	 */
-	this.target;
+	this.target = null;
 }
 
 // constructor

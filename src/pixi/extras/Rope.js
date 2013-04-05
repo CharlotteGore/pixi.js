@@ -45,6 +45,7 @@ PIXI.Rope.prototype.refresh = function()
 	var nextPoint;
 	var perp = {x:0, y:0};
 	var point = points[0];
+	var index;
 	
 	this.count-=0.2;
 	
@@ -65,8 +66,8 @@ PIXI.Rope.prototype.refresh = function()
 	for (var i =  1; i < total; i++) 
 	{
 		
-		var point = points[i];
-		var index = i * 4;
+		point = points[i];
+		index = i * 4;
 		// time to do some smart drawing!
 		var amount = i/(total-1)
 		
@@ -112,6 +113,7 @@ PIXI.Rope.prototype.updateTransform = function()
 	var nextPoint;
 	var perp = {x:0, y:0};
 	var point = points[0];
+	var index;
 	
 	this.count-=0.2;
 	
@@ -126,8 +128,8 @@ PIXI.Rope.prototype.updateTransform = function()
 	for (var i =  1; i < total; i++) 
 	{
 		
-		var point = points[i];
-		var index = i * 4;
+		point = points[i];
+		index = i * 4;
 		
 		if(i < points.length-1)
 		{
